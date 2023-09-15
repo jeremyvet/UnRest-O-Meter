@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UnRest-O-Meter</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/style.css" />
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const info = {
+        '1': {
+          name: 'event 1',
+          description: 'description 1',
+          image: 'images/image.jpg',
+          score: 100
+        },
+        '2': {
+          name: 'event 2',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '3': {
+          name: 'event 3',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '4': {
+          name: 'event 4',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '5': {
+          name: 'event 5',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '6': {
+          name: 'event 6',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '7': {
+          name: 'event 7',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '8': {
+          name: 'event 8',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '9': {
+          name: 'event 9',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        },
+        '10': {
+          name: 'event 10',
+          description: 'description 1',
+          image: 'images/image.png',
+          score: 100
+        }
+
+      }
+      console.log('hello, world 2!')
+
+      let anim_id = 0;
+
+      setTimeout(() => {
+        const elements = document.getElementsByClassName('box')
+        for (let i = 0; i < elements.length; i++) {
+          elements[i].classList.add('boxtrans')
+
+          elements[i].addEventListener('click', () => {
+            anim_id += 1;
+            const aid = anim_id;
+
+            let visScore = 0;
+            const id = elements[i].children[0].innerHTML;
+            const innerInfo = info[id];
+            const reDraw = () => { 
+              $('#infobox').html(`
+                <h1>${innerInfo.name}</h1>
+                <p>${innerInfo.description}</p>
+                <img src="${innerInfo.image}" />
+
+                <h2>${visScore}%</h2>
+                <div class="line"></div>
+              `);
+            }
+
+            const getTime = () => {
+              const t = visScore / innerInfo.score; // Normalize to [0, 1]
+              const k = -Math.log(10/200);  // Adjusted to have decay from 600 to 10 over t=1
+              const decayedValue = 200 * Math.exp(-k * t);
+              
+              return Math.round(decayedValue);
+            }
+
+            const check = () => {
+              if(aid !== anim_id) {
+                console.log('aid did not match, quitting')
+                return;
+              }
+              if(visScore < innerInfo.score) {
+                visScore++;
+                reDraw();
+                console.log(getTime());
+                setTimeout(check, getTime());
+              }
+            }
+            check();
+          })
+        }
+      }, 1)
+
+    })
+
+    // $(document).click(function () {
+    //   $('#box2').hide();
+    // });
+
+    // $('#box1').click(function (e) {
+    //   e.stopPropagation();
+    //   $('#box2').show();
+    // });
+
+  </script>
+</head>
+
+<body>
+  <div class="outline">
+    <div class="container">
+      <img class="image" src="public/wordart.png" alt="UnRest-O-Meter Text Image" width="1234.5" height="275"></img>
+      <div class="wrapper">
+        <a href="#">
+          <div class="box">
+            <p class="boxText">1</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">2</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">3</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">4</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">5</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">6</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">7</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">8</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">9</p>
+          </div>
+        </a>
+
+        <a href="#">
+          <div class="box">
+            <p class="boxText">10</p>
+          </div>
+        </a>
+      </div>
+
+      <div id="infobox"></div>
+
+      <h1 class="subtext">By: Jeremy</h1>
+
+    </div>
+
+  </div>
+
+
+
+</body>
+
+
+
+</html>
